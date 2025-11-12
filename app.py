@@ -111,10 +111,10 @@ if st.button("submit"):
 # shap explainer
 if st.session_state.page == "explain":
     prediction = st.session_state.prediction
-    st.text(f"predicted price: {prediction}")
     with st.form("Explainer form"):
         top_k = st.number_input("no of factors", min_value= 1, max_value= st.session_state.columns_no)
         if st.form_submit_button("explain"):
+            st.text(f"predicted price: {prediction}")
             explainer = shap.TreeExplainer(model)
             df = preprocessor.transform(st.session_state.df)
             shap_values = explainer.shap_values(df)
@@ -150,4 +150,5 @@ if st.session_state.page == "explain":
 
 
             st.text(shap_explanation(top_k))
+
 
