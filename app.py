@@ -102,7 +102,7 @@ if st.button("submit"):
         "fp3": fp3
     }, index=[0])
     prediction = pipeline.predict(df)[0]
-    st.text(f"Dropout risk percentage: {prediction:.2f}")
+    st.text(f"predicted price: {prediction}")
     st.session_state.page = "explain"
     st.session_state.df = df
     st.session_state.prediction = prediction
@@ -111,7 +111,6 @@ if st.button("submit"):
 # shap explainer
 if st.session_state.page == "explain":
     prediction = st.session_state.prediction
-    st.write(f"predicted price: {prediction}")
     with st.form("Explainer form"):
         top_k = st.number_input("no of factors", min_value= 1, max_value= st.session_state.columns_no)
         if st.form_submit_button("explain"):
@@ -147,5 +146,6 @@ if st.session_state.page == "explain":
                     explainer += f"- {name} {direction} the risk by {val:+.3f}\n"
 
                 return explainer
+
 
             st.text(shap_explanation(top_k))
